@@ -1,5 +1,3 @@
-# azure-assignment
-
 # Flask App for Listing Files in Azure Blob Storage
 This Flask app allows you to list filenames present in specific folders of an Azure Blob Storage container. The app is deployed on a virtual machine (VM) in the East US region and can only be accessed from the Tiger VPN. Follow the instructions below to set up the environment and deploy the app.
 
@@ -77,3 +75,7 @@ Copy the app.py file containing the Flask app code to the VM. And run by using `
 - The if ```__name__ == '__main__'```: block ensures that the Flask application is only run when the script is executed directly (not when imported as a module). It starts the Flask development server on ```0.0.0.0:5000.```
 
 - Overall, this code sets up a Flask API that listens for requests with a folder name parameter in the URL. It establishes a connection to Azure Blob Storage, retrieves a list of filenames within the specified folder, and returns them as a JSON response.
+=======
+```enh/azure-assignment/1``` : Branch that contains code to list all files from Blob storge through Flask application.
+```enh/azure-assignment/2``` : Branch that contain Azure Pipeline with simple orchestration facility
+
