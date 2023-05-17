@@ -1,0 +1,88 @@
+{
+    "name": "pipeline1",
+    "properties": {
+        "activities": [
+            {
+                "name": "Data Preprocessing",
+                "type": "DatabricksNotebook",
+                "dependsOn": [],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "notebookPath": "/Users/saran.gunasekara@tigeranalytics.com/Data Preprocessing"
+                },
+                "linkedServiceName": {
+                    "referenceName": "DatabricksService",
+                    "type": "LinkedServiceReference"
+                }
+            },
+            {
+                "name": "Model Training",
+                "type": "DatabricksNotebook",
+                "dependsOn": [
+                    {
+                        "activity": "Data Preprocessing",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "notebookPath": "/Users/saran.gunasekara@tigeranalytics.com/Model Training and Saving"
+                },
+                "linkedServiceName": {
+                    "referenceName": "DatabricksService",
+                    "type": "LinkedServiceReference"
+                }
+            },
+            {
+                "name": "Save Helper File",
+                "type": "ExecuteDataFlow",
+                "dependsOn": [
+                    {
+                        "activity": "Data Preprocessing",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "dataflow": {
+                        "referenceName": "smokingdiabetesrelation",
+                        "type": "DataFlowReference"
+                    },
+                    "compute": {
+                        "coreCount": 8,
+                        "computeType": "General"
+                    },
+                    "traceLevel": "Fine"
+                }
+            }
+        ],
+        "annotations": [],
+        "lastPublishTime": "2023-05-16T10:21:36Z"
+    },
+    "type": "Microsoft.DataFactory/factories/pipelines"
+}

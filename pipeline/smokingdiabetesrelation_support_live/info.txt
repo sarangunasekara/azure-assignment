@@ -1,0 +1,6 @@
+selected resource name:		smokingdiabetesrelation
+selected resource type:		dataflow
+factory name:			saran-datafactory
+factory location:		eastus
+subscription id:		b2f78be8-771a-48f5-932f-d2a28d04ff16
+time of download (UTC):		Wed, 17 May 2023 03:26:16 GMT

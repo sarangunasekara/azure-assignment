@@ -1,0 +1,4 @@
+"Pipeline name","Status","Error","Activity type","Run start","Duration","Log","Integration runtime","User properties","Run ID"
+"Save Helper File","Succeeded","","ExecuteDataFlow","5/17/2023, 8:46:27 AM","00:03:23","","AutoResolveIntegrationRuntime (East US)","{}","2bcb3cc3-27d5-4d3c-b584-87589c13737a"
+"Model Training","Succeeded","","DatabricksNotebook","5/17/2023, 8:46:27 AM","00:02:04","","AutoResolveIntegrationRuntime (East US)","{}","2ec6ce7f-a2e7-4eec-a192-65eaeda1ed2e"
+"Data Preprocessing","Succeeded","","DatabricksNotebook","5/17/2023, 8:45:53 AM","00:00:34","","AutoResolveIntegrationRuntime (East US)","{}","7f1252a7-faea-4c27-8d44-218e2bb1421f"

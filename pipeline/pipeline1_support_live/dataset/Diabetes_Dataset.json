@@ -1,0 +1,61 @@
+{
+    "name": "Diabetes_Dataset",
+    "properties": {
+        "linkedServiceName": {
+            "referenceName": "blob",
+            "type": "LinkedServiceReference"
+        },
+        "annotations": [],
+        "type": "DelimitedText",
+        "typeProperties": {
+            "location": {
+                "type": "AzureBlobStorageLocation",
+                "fileName": "diabetes_prediction_dataset.csv",
+                "folderPath": "data/raw",
+                "container": "databricks-con"
+            },
+            "columnDelimiter": ",",
+            "escapeChar": "\\",
+            "firstRowAsHeader": true,
+            "quoteChar": "\""
+        },
+        "schema": [
+            {
+                "name": "gender",
+                "type": "String"
+            },
+            {
+                "name": "age",
+                "type": "String"
+            },
+            {
+                "name": "hypertension",
+                "type": "String"
+            },
+            {
+                "name": "heart_disease",
+                "type": "String"
+            },
+            {
+                "name": "smoking_history",
+                "type": "String"
+            },
+            {
+                "name": "bmi",
+                "type": "String"
+            },
+            {
+                "name": "HbA1c_level",
+                "type": "String"
+            },
+            {
+                "name": "blood_glucose_level",
+                "type": "String"
+            },
+            {
+                "name": "diabetes",
+                "type": "String"
+            }
+        ]
+    }
+}
