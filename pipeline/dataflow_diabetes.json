@@ -1,0 +1,77 @@
+{
+    "name": "smokingdiabetesrelation",
+    "properties": {
+        "type": "MappingDataFlow",
+        "typeProperties": {
+            "sources": [
+                {
+                    "dataset": {
+                        "referenceName": "Diabetes_Dataset",
+                        "type": "DatasetReference"
+                    },
+                    "name": "datasource"
+                }
+            ],
+            "sinks": [
+                {
+                    "dataset": {
+                        "referenceName": "Relationship_Smoking_Diab",
+                        "type": "DatasetReference"
+                    },
+                    "name": "savetoblob",
+                    "rejectedDataLinkedService": {
+                        "referenceName": "blob",
+                        "type": "LinkedServiceReference"
+                    }
+                }
+            ],
+            "transformations": [
+                {
+                    "name": "smokingdiabetes"
+                }
+            ],
+            "scriptLines": [
+                "source(output(",
+                "          gender as string,",
+                "          age as integer,",
+                "          hypertension as integer,",
+                "          heart_disease as integer,",
+                "          smoking_history as string,",
+                "          bmi as integer,",
+                "          HbA1c_level as integer,",
+                "          blood_glucose_level as integer,",
+                "          diabetes as integer",
+                "     ),",
+                "     allowSchemaDrift: true,",
+                "     validateSchema: true,",
+                "     ignoreNoFilesFound: false,",
+                "     partitionBy('hash', 1)) ~> datasource",
+                "datasource pivot(groupBy(smoking_history),",
+                "     pivotBy(diabetes),",
+                "     relation = count(),",
+                "     columnNaming: '$N$V',",
+                "     lateral: true,",
+                "     partitionBy('hash', 1)) ~> smokingdiabetes",
+                "smokingdiabetes sink(allowSchemaDrift: true,",
+                "     validateSchema: false,",
+                "     input(",
+                "          Column_1 as string,",
+                "          Column_2 as string,",
+                "          Column_3 as string,",
+                "          Column_4 as string,",
+                "          Column_5 as string,",
+                "          Column_6 as string,",
+                "          Column_7 as string,",
+                "          Column_8 as string,",
+                "          Column_9 as string",
+                "     ),",
+                "     partitionFileNames:['relation_smoking_diab.csv'],",
+                "     skipDuplicateMapInputs: true,",
+                "     skipDuplicateMapOutputs: true,",
+                "     saveOrder: 1,",
+                "     outputAssertFailedRows: true,",
+                "     partitionBy('hash', 1)) ~> savetoblob"
+            ]
+        }
+    }
+}

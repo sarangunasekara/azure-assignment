@@ -1,78 +1,32 @@
-# Flask App for Listing Files in Azure Blob Storage
-This Flask app allows you to list filenames present in specific folders of an Azure Blob Storage container. The app is deployed on a virtual machine (VM) in the East US region and can only be accessed from the Tiger VPN. Follow the instructions below to set up the environment and deploy the app.
+# Capstone project
 
-### Prerequisites
-- Azure subscription
-- Azure CLI installed on your local machine
-- Tiger VPN access
+## ADF Dataflow Creation: 
+Start by creating an ADF dataflow, which is a visual representation of data transformation logic. In this case, we've used two notebooks for data preprocessing and model building.
 
-## Step 1: Resource Group Creation
-Already, the resource group has been created in the East US region.
+## Data Preprocessing Notebook
+The data preprocessing notebook contains the code that performs the necessary transformations on our raw data. This can include tasks like data cleaning, feature engineering, data enrichment, or any other data preparation steps required before feeding it into the model building process.
 
-## Step 2: Storage Account Creation
-Create a storage account in the "cloud_training" resource group and the East US region in the portal or using Azure CLI command.
+## Model Building Notebook
+The model building notebook contains the code for training your machine learning model. This notebook uses the preprocessed data as input and performs the necessary steps to build and train the model, such as selecting algorithms, tuning hyperparameters, and evaluating the model's performance.
 
-## Step 3: Container and Folders Creation
-Create a container and three folders ("sample1", "sample2", "sample3") inside the container and upload random files inside each folder. This will display in our Flask web application that we about to create in subsequent steps.
+## Dataflow creation
+![Dataflow Image](https://github.com/sarangunasekara/azure-assignment/assets/96530239/4d293a7d-3bb7-40d8-9b3f-51792d730017)
+Once you have the dataflow and notebooks ready, create an ADF dataflow. This is a helper thing that would give insight on relationship between smoking habits and diabetes. This will save into a csv file in a container.
 
-### Step 4: Flask App Deployment
-Copy the Flask app code provided in the question to a file named app.py on your local machine.
+## ADF Pipeline Creation
+![Pipeline Image](https://github.com/sarangunasekara/azure-assignment/assets/96530239/77a73d1a-396a-4dd9-bd28-eef534c0f864)
+A pipeline is a logical grouping of activities that define the workflow and dependencies between different components. In this case, your pipeline will consist of two activities: the data preprocessing activity and the model building activity.
 
-```sh
-from flask import Flask, redirect, url_for, request, render_template, jsonify
-from azure.storage.blob import ContainerClient, BlobClient
-import os
+## Data Preprocessing Activity: 
+In your ADF pipeline, configure the data preprocessing activity to use the dataflow you created earlier. This activity triggers the execution of the dataflow and applies the transformations defined in the preprocessing notebook to your input data.
 
-app = Flask(__name__)
+## Model Building Activity: 
+Configure the model building activity in the pipeline to execute the model building notebook. This activity takes the preprocessed data from the previous step and performs the necessary steps to train and build the machine learning model.
 
-# Get request
-@app.route('/<foldername>')
-def list_all_dirs(foldername):
-    res = []
-    connect_str = 'XXXXXX-XXX-XXXXXXX'  # Replace with your actual connection string
-    blob_service_client = ContainerClient.from_connection_string(connect_str, container_name="saran-input")
-    blob_list = blob_service_client.list_blobs()
+## Manual Triggering
+![pipeline activity runs](https://github.com/sarangunasekara/azure-assignment/assets/96530239/64077e82-413a-4f7b-baad-ac81b18c6362)
+With your ADF pipeline configured, you can manually trigger its execution. This allows you to control when the data preprocessing and model building activities run. Manual triggering is useful when you want to test or validate the pipeline's functionality before scheduling it for automatic execution.
 
-    for blob in blob_list:
-        temp = str(blob.name)
-        folder, file = temp.split('/')
-        if folder == foldername:
-            res.append(file)
-
-    return render_template('files.html', foldername=foldername, files=res)
-
-
-if __name__ == '__main__':
-    app.run(app='app:app',host='0.0.0.0', debug=True)
-```
-
-## Step 5: Virtual Network Creation
-Create a virtual network (VNET) with a subnet in the East US region.
-
-## Step 6: VM Creation
-Create a VM in the "cloud_training" resource group, within the VNET and subnet created above, with a Standard_A2_v2 size, a public IP, and a 10GB disk. 
-
-## Step 7: Flask App Deployment to VM
-Copy the app.py file containing the Flask app code to the VM. And run by using ```python3 app.py run```
-
-# Overview about code
- - The provided code is a Flask application that interacts with Azure Blob Storage to list filenames in specific folders within a container. Let's go over the code and understand its functionality:
-
-- The code starts by importing necessary modules, including Flask and Azure Blob Storage-related modules.
-
-- An instance of the Flask application is created with app = ```Flask(__name__).```
-
-- The main route of the application is defined using the @app.route decorator. The route accepts a ```<foldername>``` parameter in the URL.
-
-- Within the route function fun(foldername), the code establishes a connection to Azure Blob Storage using the provided storage account connection string. It creates a ContainerClient object to work with a specific container named "cont".
-
-- It then retrieves a list of blobs (files) within the container using ```blob_service_client.list_blobs()```.
-
-- The code iterates over each blob and checks if its folder name matches the provided ```<foldername>```. If it does, the corresponding filename is extracted and added to the res list.
-
-- Finally, the res list is returned as a JSON response using jsonify(res).
-
-- The if ```__name__ == '__main__'```: block ensures that the Flask application is only run when the script is executed directly (not when imported as a module). It starts the Flask development server on ```0.0.0.0:5000.```
-
-- Overall, this code sets up a Flask API that listens for requests with a folder name parameter in the URL. It establishes a connection to Azure Blob Storage, retrieves a list of filenames within the specified folder, and returns them as a JSON response.
+## Pipeline Run Validation 
+Once the pipeline run is triggered, monitor its execution and validate its outcome. Check the logs, execution details, and any generated output or artifacts to ensure that the data preprocessing and model building activities completed successfully. You can also inspect the intermediate data produced during the dataflow and model building process to verify the transformations and model training.
 
