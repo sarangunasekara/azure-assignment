@@ -17,6 +17,7 @@ Create a container and three folders ("sample1", "sample2", "sample3") inside th
 
 ### Step 4: Flask App Deployment
 Copy the Flask app code provided in the question to a file named app.py on your local machine.
+![1](https://github.com/sarangunasekara/azure-assignment/assets/96530239/428c3a7e-8a52-4fa0-9ecb-c9b1acfac848)
 
 ```sh
 from flask import Flask, redirect, url_for, request, render_template, jsonify
@@ -54,6 +55,8 @@ Create a VM in the "cloud_training" resource group, within the VNET and subnet c
 
 ## Step 7: Flask App Deployment to VM
 Copy the app.py file containing the Flask app code to the VM. And run by using ```python3 app.py run```
+![vpnconnect](https://github.com/sarangunasekara/azure-assignment/assets/96530239/04ccc6c7-5282-4912-bf23-4dfda0ff9ee6)
+
 
 # Overview about code
  - The provided code is a Flask application that interacts with Azure Blob Storage to list filenames in specific folders within a container. Let's go over the code and understand its functionality:
